@@ -1,7 +1,11 @@
 Makefile~
-*.syvers 
-*.ko 
 scull.mod.o 
 scull.o
 *.o
 *~
+*.mod.c
+*.order
+.tmp*
+.*.cmd
+*.symvers
+*.ko
