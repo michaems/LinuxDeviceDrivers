@@ -1,2 +1,7 @@
 Makefile~
-*.syvers scull.ko scull.mod.o scull.o
+*.syvers 
+*.ko 
+scull.mod.o 
+scull.o
+*.o
+*~
