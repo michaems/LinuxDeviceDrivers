@@ -1,14 +1,17 @@
-ifneq ($(KERNELRELEASE),)
-	obj-m := scull.o
-	
-else
-	KERNELDIR ?= /lib/modules/$(shell uname -r)/build
-	PWD := $(shell pwd)
-	
-default:
-	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
 
-endif
+obj-m += helloworld.o
 
-clean:
-	$(MAKE) -C $(KERNELDIR) M=$(PWD) clean
+KERNEL_DIR ?= /home/michael/learningDeviceDriver/rpilinux
+
+all:
+	make -C $(KERNEL_DIR) \
+		ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- \
+		SUBDIRS=$(PWD) modules
+
+clean: 
+	make -C $(KERNEL_DIR) \
+		ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- \
+		SUBDIRS=$(PWD) clean
+
+deploy:
+	scp *.ko pi@192.168.0.10:
