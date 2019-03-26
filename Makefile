@@ -15,3 +15,4 @@ clean:
 
 deploy:
 	scp *.ko pi@192.168.0.10:
+
