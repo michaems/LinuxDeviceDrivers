@@ -1,7 +1,7 @@
 
-obj-m += helloworld.o
+obj-m += helloworld.o helloworld_with_pars.o helloworld_with_timing.o
 
-KERNEL_DIR ?= /home/michael/learningDeviceDriver/rpilinux
+KERNEL_DIR ?= $(RPI_LINUX_SOURCE)
 
 all:
 	make -C $(KERNEL_DIR) \
@@ -14,5 +14,5 @@ clean:
 		SUBDIRS=$(PWD) clean
 
 deploy:
-	scp *.ko pi@192.168.0.10:
+	scp *.ko pi@192.168.0.12:
 
