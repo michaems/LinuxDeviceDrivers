@@ -1,5 +1,5 @@
 
-obj-m += helloworld.o helloworld_with_pars.o helloworld_with_timing.o
+obj-m += helloworld.o
 
 KERNEL_DIR ?= $(RPI_LINUX_SOURCE)
 
