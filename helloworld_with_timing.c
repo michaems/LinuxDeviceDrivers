@@ -4,8 +4,6 @@
 static int num=5;
 static struct timeval start_time; 
 
-
-
 static void say_hello(void)
 {
     int i;
@@ -13,8 +11,7 @@ static void say_hello(void)
     {
         /* code */
         pr_info("[%d/%d] Hello!\n", i, num);
-    }
-    
+    }  
 }
 
 static int __init first_init(void)
