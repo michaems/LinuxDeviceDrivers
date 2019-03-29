@@ -4,9 +4,16 @@
 #include <linux/cdev.h>
 #include <linux/fs.h>
 
+#include <linux/device.h>
+
+#define DEVICE_NAME "mish_device"
+#define CLASS_NAME "hello_class"
+
 #define MY_MAJOR_NUM 202
 
+static struct class* helloClass;
 static struct cdev my_dev;
+dev_t dev;
 
 static int my_dev_open(struct inode *inode, struct file *file)
 {
@@ -38,28 +45,25 @@ static const struct file_operations my_dev_fops = {
 static int __init hello_init(void)
 {
 	int ret;
+    dev_t dev_no;
+	int Major;
 
-	/*Get first device identifier*/
-	dev_t dev = MKDEV(MY_MAJOR_NUM, 0);
+	struct device* helloDevice;
+
 	pr_info("Hello World init\n");
 
-	ret = register_chrdev_region(dev, 1, "my_char_device");
+	ret = alloc_chrdev_region(&dev_no, 0, 1, DEVICE_NAME);
 
-	if (ret < 0)
-	{
-		pr_info("Unable to allocate major number %d\n", MY_MAJOR_NUM);
-		return ret;
-	}
+	Major = MAJOR(dev_no);
+	
+	dev = MKDEV(Major, 0);
 
 	cdev_init(&my_dev, &my_dev_fops);
 	ret = cdev_add(&my_dev, dev, 1);
 
-	if (ret < 0)
-	{
-		unregister_chrdev_region(dev, 1);
-		pr_info("Unable to add cdev\n");
-		return ret;
-	}
+	helloClass = class_create(THIS_MODULE, CLASS_NAME);
+
+	helloDevice = device_create(helloClass, NULL, dev, NULL, DEVICE_NAME);
 
 	return 0;
 }
