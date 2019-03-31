@@ -1,5 +1,5 @@
 
-obj-m += helloworld.o
+obj-m += misc_driver.o
 
 KERNEL_DIR ?= $(RPI_LINUX_SOURCE)
 
